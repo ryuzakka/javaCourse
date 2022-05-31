@@ -110,18 +110,35 @@
 			margin:auto;
 			border:solid 1px lightgray;
 		}
-		#sixth #caption {
+		#sixth .caption {
 			font-size:30px;
 			font-style:bold;
 			text-align:center;
 		}
-		#sixth div #item {
-			list-style-type:none;
-			display:inline-block;
+		#sixth .item {
+			width:1050px;
+			height:300px;
 		}
-		#sixth div #item img {
-			width:20%;
-			/* height:326px; */
+		#sixth .item .itemlist {
+			list-style-type:none;
+			display: flexbox;
+			/* position: relative; */
+		}
+		#sixth .item .itemlist .img {
+			display: inline-block;
+		}
+		#sixth .item .itemlist img .product {
+			position: absolute;
+			/* display: flexbox; */
+			width: 40%;
+			height: auto;
+		}
+		#sixth .item .itemlist img .cart {
+			border-radius: 100%;
+			width: 80px;
+			height: 80px;
+			background-color: lightgray;
+			display: inline-block;
 		}
 	</style>
 </head>
@@ -158,13 +175,65 @@
 	</div>
 	<div id="fifth"><img src="img/32f45f26-8f33-4b1d-ae91-3b4f6483a4a0.webp"></div>
 	<div id="sixth">
-		<div id="caption">이 상품 어때요?</div>
-		<div>
-			<ul id="item">
-				<li><img src="img/1653040503160l0.jpeg"></li>
-				<li><img src="img/1646967960824l0.webp"></li>
-				<li><img src="img/149507097276l0.jpg"></li>
-				<li><img src="img/1510025376326l0.jpg"></li>
+		<p class="caption">이 상품 어때요?</p>
+		<div class="item">
+			<ul >
+				<li class="itemlist">
+					<div class="img">
+						<img class="product" src="img/1653040503160l0.jpeg">
+						<img class="cart" src="img/ico_cart.svg">
+					</div>
+					<div>
+						<div>상품명</div>
+						<div>
+							<span>할인율</span>
+							<span>최종금액</span>
+						</div>
+						<div>정가</div>
+					</div>
+				</li>
+				<li class="itemlist">
+					<div class="img">
+						<img class="product" src="img/1646967960824l0.webp">
+						<img class="cart" src="img/ico_cart.svg">
+					</div>
+					<div>
+						<div>상품명</div>
+						<div>
+							<span>할인율</span>
+							<span>최종금액</span>
+						</div>
+						<div>정가</div>
+					</div>
+				</li>
+				<li class="itemlist">
+					<div class="img">
+						<img class="product" src="img/149507097276l0.jpg">
+						<img class="cart" src="img/ico_cart.svg">
+					</div>
+					<div>
+						<div>상품명</div>
+						<div>
+							<span>할인율</span>
+							<span>최종금액</span>
+						</div>
+						<div>정가</div>
+					</div>
+				</li>
+				<li class="itemlist">
+					<div class="img">
+						<img class="product" src="img/1510025376326l0.jpg">
+						<img class="cart" src="img/ico_cart.svg">
+					</div>
+					<div>
+						<div>상품명</div>
+						<div>
+							<span>할인율</span>
+							<span>최종금액</span>
+						</div>
+						<div>정가</div>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>
