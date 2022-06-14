@@ -68,15 +68,7 @@
 		</tr>
 	<% while(rs.next()) { %>
 		<tr>
-		<% 
-		int bimil;
-		if(rs.getString("secret") == null) {
-			bimil = 0;
-		} else {
-			bimil = Integer.parseInt(rs.getString("secret"));
-		}
-		if( bimil != 1 ) { 
-		%>
+		<% if(rs.getInt("secret") == 0) { %>
 			<td> <a href="viewcnt.jsp?id=<%=rs.getString("id") %>"> <%=rs.getString("title") %> </a> </td>
 		<% }
 		else { %>
