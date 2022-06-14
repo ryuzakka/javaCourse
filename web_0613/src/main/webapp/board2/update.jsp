@@ -48,7 +48,7 @@
 			<tr height="200">
 				<td> 내 용 </td>
 				<td>
-					<textarea rows="8" cols="42" name="content"> <%=rs.getString("content") %> </textarea>
+					<textarea rows="8" cols="42" name="content"><%=rs.getString("content") %></textarea>
 				</td>
 			</tr>
 			<tr>

@@ -9,21 +9,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>board2/list</title>
 <style>
-	table { 
-		/* border:1px solid black; */
-		border-spacing:0px; 
+	table {
+		border-spacing:0; /* 셀과 셀의 간격 */
 	}
-	tr:last-child > td {
-		border-bottom:1px solid black;
+	tr:first-child td:first-child {
+		border:none;
+	}
+	tr:nth-child(2) td {
+		border-top:2px solid hotpink;
 	}
 	td {
-		border:1px solid black;
-		border-bottom:none;
-		border-right:none;
-		height:30px;
+		border-top:1px solid hotpink;
+		height:34px;
 	}
-	td:last-child {
-		border-right:1px solid black;
+	tr:last-child td {
+		border-bottom:2px solid hotpink;
 	}
 	#secretchk { 
 		visibility:hidden;
@@ -71,19 +71,29 @@
 			<input type="submit" value="확인">
 		</div>
 	</form>
-	<table width="500" align="center">
+	<table width="600" align="center">
 		<caption><h2>게시판 목록</h2></caption>
 		<tr>
 			<td colspan="4" align="left"><a href="write.jsp"><input type="button" value="글쓰기"></a></td>
 		</tr>
 		<tr align="center">
-			<td> 제 목 </td>
-			<td> 이 름 </td>
-			<td> 조회수 </td>
-			<td> 작성일 </td>
+			<td width="300"> 제 목 </td>
+			<td width="100"> 이 름 </td>
+			<td width="100"> 조회수 </td>
+			<td width="100"> 작성일 </td>
 		</tr>
-	<% while(rs.next()) { %>
-		<tr>
+	<% 
+	int i = 1;
+	String bgcolor;
+	while(rs.next()) {
+		if(i%2 != 0) {
+			bgcolor = "style='background:#eeeeee'";
+		}
+		else {
+			bgcolor = "style='background:white'";
+		}
+	%>
+		<tr <%=bgcolor%>>
 		<% if(rs.getInt("secret") == 0) { %>
 			<td> <a href="viewcnt.jsp?id=<%=rs.getString("id") %>"> <%=rs.getString("title") %> </a> </td>
 		<% }
@@ -95,7 +105,8 @@
 			<td align="center"> <%=rs.getString("viewcnt") %> </td>
 			<td align="center"> <%=rs.getString("writeday") %> </td>
 		</tr>
-	<% } %>
+	<% i++;
+	} %>
 	</table>
 <%
 	rs.close();

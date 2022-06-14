@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>board2/view</title>
 <style>
+	#pwdchk { display:none; }
 	#uppwdchk { display:none; }
 	#delpwdchk { display:none; }
 </style>
@@ -25,8 +26,11 @@
 	
 	ResultSet rs = pstmt.executeQuery();
 	rs.next();
+	
+	int num = 0;
 %>
 <script>
+	/*  
 	function upView() {
 		<%
 		if(rs.getInt("secret") == 1) {
@@ -43,6 +47,23 @@
 	function delView() {
 		document.getElementById("uppwdchk").style.display = "none";
 		document.getElementById("delpwdchk").style.display = "table-row";
+	}
+	*/
+
+	function updBtn() {
+	<% if(rs.getInt("secret") == 1) { %>
+		location = "update.jsp?id=<%=rs.getString("id")%>";
+	<% } else { 
+	%>
+		document.getElementById("pwdchk").style.display = "table-row";
+		document.chk.action = "update_check.jsp";
+		document.chk.submt.value = "수정";
+	<% } %>
+	}
+	function delBtn() {
+		document.getElementById("pwdchk").style.display = "table-row";
+		document.chk.action = "delete_check.jsp";
+		document.chk.submt.value = "삭제";
 	}
 </script>
 <body>
@@ -84,14 +105,25 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center">
-				<input type="button" onclick="upView()" value="수정">
-				<a href="list.jsp"> <input type="button" value="목록"> </a>
-				<input type="button" onclick="delView()" value="삭제">
+			<td> 비밀글 </td>
+			<td>
+			<% if(rs.getInt("secret") == 1) { %>
+				<span>비밀글 입니다.</span>
+			<% } else { %>
+				<span>비밀글이 아닙니다.</span>
+			<% } %>
 			</td>
 		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<input type="button" onclick="updBtn()" value="수정">
+				<a href="list.jsp"> <input type="button" value="목록"> </a>
+				<input type="button" onclick="delBtn()" value="삭제">
+			</td>
+		</tr>
+		<!-- 
 		<tr id="uppwdchk">
-			<td colspan="2">
+			<td colspan="2" align="center">
 				<form method="post" action="update_check.jsp">
 					<input type="hidden" name="id" value="<%=rs.getString("id") %>">
 					<input type="password" name="pwd" placeholder="비밀번호를 입력하세요.">
@@ -100,11 +132,21 @@
 			</td>
 		</tr>
 		<tr id="delpwdchk">
-			<td colspan="2">
+			<td colspan="2" align="center">
 				<form method="post" action="delete_check.jsp">
 					<input type="hidden" name="id" value="<%=rs.getString("id") %>">
 					<input type="password" name="pwd" placeholder="비밀번호를 입력하세요.">
 					<input type="submit" value="확인">
+				</form>
+			</td>
+		</tr>
+		 -->
+		<tr id="pwdchk">
+			<td colspan="2" align="center">
+				<form name="chk" method="post" action="">
+					<input type="hidden" name="id" value="<%=rs.getString("id") %>">
+					<input type="password" name="pwd" placeholder="비밀번호를 입력하세요.">
+					<input type="submit" name="submt" value="확인">
 				</form>
 			</td>
 		</tr>
