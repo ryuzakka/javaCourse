@@ -31,16 +31,8 @@
 		display:none;
 		position:absolute; 
 	}
-	#upform { visibility:hidden; }
 </style>
 <script>
-	function upform_view(id, name, content) {
-		document.upform.style.visibility = "visible";
-		document.upform.id.value = id;
-		document.upform.name.value = name;
-		document.upform.content.value = content;
-	}
-
 	function updBtn() {		/* 게시글 수정하기 */
 	<% if(rs.getInt("secret") == 1) { %>
 		location = "update.jsp?id=<%=rs.getString("id")%>";
@@ -63,13 +55,11 @@
 		document.getElementById("com_del").style.left = event.pageX+"px";
 		document.getElementById("com_del").style.top = event.pageY+"px";
 	}
-	/*  
-	function winOpen(id) {	// 댓글 수정하기 : 새창에서 수정하기
+	function winOpen(id) {	/* 댓글 수정하기 : 새창에서 수정하기 */
 		
 		let son = open("comment_update_open.jsp?id="+id, "", "width=800,height=250,left=100,top=100");
 		son.moveTo(500,500);
 	}
-	*/
 </script>
 </head>
 <body>
@@ -178,28 +168,12 @@
 			<td><%=rs2.getString("content").replace("\r\n", "<br>")%></td>
 			<td><%=rs2.getString("writeday")%></td>
 			<td>
-				<input type="button" value="수정" onclick="upform_view('<%=rs2.getString("id")%>','<%=rs2.getString("name")%>','<%=rs2.getString("content")%>')">
+				<input type="button" value="수정" onclick="winOpen(<%=rs2.getString("id")%>)">
 				<input type="button" value="삭제" onclick="commentDel(<%=rs2.getString("id")%>)">
 			</td>
 		</tr>
 	<%	} %>
 	</table>
-	
-	<!-- 댓글 수정 폼 -->
-	<form name="upform" id="upform" method="post" action="comment_update_layer_ok.jsp">
-		<table width="500" border="0" align="center">
-			<tr>
-				<input type="hidden" name="id" value="">
-				<input type="hidden" name="bid" value="<%=id%>">
-				<td> <input type="text" name="name" placeholder="이름" value=""> </td>
-				<td> <textarea cols="30" rows="2" name="content" placeholder="내용을 입력하세요."></textarea> </td>
-				<td> <input type="password" name="pwd" placeholder="비밀번호"> </td>
-				<td> <input type="submit" value="댓글수정"> </td>
-			</tr>
-		</table>
-	</form>
-	
-	<!-- 댓글 삭제 폼 -->
 	<form id="com_del" method="post" action="comment_delete.jsp">
 		<input type="hidden" name="id">
 		<input type="hidden" name="bid" value="<%=rs.getString("id")%>">
@@ -208,7 +182,6 @@
 	</form>
 </body>
 
-</html>
 <%
 	rs.close();
 	pstmt.close();
@@ -216,3 +189,4 @@
 	pstmt2.close();
 	conn.close();
 %>
+</html>

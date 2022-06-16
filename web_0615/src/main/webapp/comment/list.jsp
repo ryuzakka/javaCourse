@@ -1,6 +1,19 @@
 <%@page import="com.mysql.jdbc.PreparedStatement.ParseInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%
+	Class.forName("com.mysql.jdbc.Driver");
+	String db = "jdbc:mysql://localhost:3306/board_test";
+	Connection conn = DriverManager.getConnection(db, "root", "5032");
+	
+	String sql = "SELECT * FROM board2";
+	
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	
+	ResultSet rs = pstmt.executeQuery();
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,19 +63,6 @@
 	}
 </script>
 </head>
-<%@ page import="java.sql.*" %>
-<%
-	Class.forName("com.mysql.jdbc.Driver");
-	String db = "jdbc:mysql://localhost:3306/board_test";
-	Connection conn = DriverManager.getConnection(db, "root", "5032");
-	
-	String sql = "SELECT * FROM board2";
-	
-	PreparedStatement pstmt = conn.prepareStatement(sql);
-	
-	ResultSet rs = pstmt.executeQuery();
-	
-%>
 <body>
 	<form id="secretchk" method="post" action="secret_check.jsp">
 		<div>
