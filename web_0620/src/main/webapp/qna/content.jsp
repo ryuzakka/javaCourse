@@ -60,7 +60,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<input type="button" value="수정" >
+				<a href="update.jsp?id=<%=id%>"><input type="button" value="수정" ></a>
 				<a href="list.jsp"><input type="button" value="목록"></a>
 				<input type="button" value="삭제" onclick="delBtn()">
 				<a href="rewrite.jsp?grp=<%=rs.getInt("grp") %>&depth=<%=rs.getInt("depth") %>&seq=<%=rs.getInt("seq") %>">
@@ -73,6 +73,9 @@
 			<form method="post" action="delete.jsp">
 				<td colspan="2" align="center">
 					<input type="hidden" name="id" value="<%=id%>">
+					<input type="hidden" name="grp" value="<%=rs.getInt("grp")%>">
+					<input type="hidden" name="depth" value="<%=rs.getInt("depth")%>">
+					<input type="hidden" name="seq" value="<%=rs.getInt("seq")%>">
 					<input type="password" name="pwd" size="6">
 					<input type="submit" value="삭제하기">
 				</td>
