@@ -59,7 +59,7 @@
 		</tr>
 		<% while(rs.next()) { %>
 		<tr>
-			<td> <a href="readcnt.jsp?id=<%= rs.getString("id") %>"><%= rs.getString("title") %></a> </td>
+			<td> <a href="readcnt.jsp?id=<%= rs.getString("id")%>&pager=<%=pager%>"><%= rs.getString("title") %></a> </td>
 			<td align="center"> <%= rs.getString("name") %> </td>
 			<td align="right"> <%= rs.getString("readcnt") %> </td>
 			<td align="right"> <%= rs.getString("writeday") %> </td>
