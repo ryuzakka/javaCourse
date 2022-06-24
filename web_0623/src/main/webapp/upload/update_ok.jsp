@@ -3,6 +3,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="com.oreilly.servlet.MultipartRequest" %>
 <%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
+<%@ page import="java.io.File" %>
 <%
 	String path = request.getRealPath("upload/img/");	// 상대경로
 	int fsize = 1024*1024*30;	// 30MB
@@ -20,6 +21,7 @@
 	String name = multi.getParameter("name");
 	String content = multi.getParameter("content");
 	String fname = multi.getFilesystemName("fname");
+	String fname2 = multi.getParameter("fname2");	// 기존의 이미지파일명
 	
 	PreparedStatement pstmt;
 	if(fname == null) {	// 기존 이미지를 그대로 사용
@@ -32,6 +34,12 @@
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(4, fname);
 		pstmt.setString(5, id);
+		
+		// 기존 이미지 파일 삭제하기
+		File file = new File(path + "/" + fname2);
+		if(file.exists()) {
+			file.delete();
+		}
 	}
 	
 	pstmt.setString(1, title);

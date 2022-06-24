@@ -44,7 +44,8 @@
 				<td> 사 진 </td>
 				<td>
 					<input type="file" name="fname">
-					<img src="img/<%=rs.getString("fname")%>" width="300">
+					<%-- <img src="img/<%=rs.getString("fname")%>" width="300"> --%>
+					<input type="hidden" name="fname2" value="<%=rs.getString("fname")%>">
 				</td>
 			</tr>
 			
