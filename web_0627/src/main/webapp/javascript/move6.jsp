@@ -18,21 +18,31 @@
 <script>
 	var left = 100;
 	var ss;
-	var direct;
-	function move() {
-		if(left == 100) {
-			direct = 1;
-		}
-		if(left == 400) {
-			direct = -1;
-		}
-		left = left + direct;
+	
+	function rightMove() {
+		left++;
 		
 		document.getElementById('aa').style.left = left+"px";
 		document.getElementById('aa').innerText = left+"px";
+		
+		if(left == 400) {
+			stop();
+			ss = setInterval(leftMove, 10);
+		}
+	}
+	function leftMove() {
+		left--;
+		
+		document.getElementById("aa").style.left = left+"px";
+		document.getElementById('aa').innerText = left+"px";
+		
+		if(left == 100) {
+			stop();
+			ss = setInterval(rightMove, 10);
+		}
 	}
 	function start() {
-		ss = setInterval(move, 10);
+		ss = setInterval(rightMove, 10);
 	}
 	function stop() {
 		// 위에서 동작시킨 start()함수 내에 있는 setInterval을 중지
