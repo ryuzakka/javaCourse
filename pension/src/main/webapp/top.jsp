@@ -121,10 +121,10 @@
 </head>
 <body>
 
-	<div id="first"> 펜션 오픈 기념 1박에 10,000원 !! <span id="closeBtn">X</span></div>
+	<div id="first"> 펜션 오픈 기념 1박에 10,000원 !! <span id="closeBtn"> [ X ] </span></div>
 	<div id="second">
 		<div id="left">
-			<img src="../img/logo.png" width="35px">
+			<a href="../main/index.jsp"><img src="../img/logo.png" width="35px"></a>
 			FUNNY펜션
 		</div>
 		<div id="right">
@@ -161,11 +161,22 @@
 						<li> 자유게시판 </li>
 					</ul>
 				</li>
+				
 				<li id="menu" onmouseover="view(4)" onmouseout="hide(4)">
-					<div>로그인</div>
-					<ul class="sub">
-						<li><a href="../member/member_input.jsp">회원가입</a></li>
-					</ul>
+					<c:if test="${userid == null}">
+						<div>회원서비스</div>
+						<ul class="sub">
+							<li><a href="../member/login.jsp">로그인</a></li>
+							<li><a href="../member/member_input.jsp">회원가입</a></li>
+						</ul>
+					</c:if>
+					<c:if test="${userid != null}">
+						<div>${username}님</div>
+						<ul class="sub">
+							<li><a href="../member/member_info.jsp">회원정보</a></li>
+							<li><a href="../member/logout.jsp">로그아웃</a></li>
+						</ul>
+					</c:if>
 				</li>
 			</ul>
 		</div>
