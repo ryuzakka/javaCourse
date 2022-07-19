@@ -3,5 +3,6 @@
 <%@ page import="dao.MemberDao" %>
 <%
 	MemberDao dao = new MemberDao();
-	dao.useridSearch(request, out);
+	//dao.useridSearch_ajax(request, out);
+	dao.useridSearch(request, response);
 %>

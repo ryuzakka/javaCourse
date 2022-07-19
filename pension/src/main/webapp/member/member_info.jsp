@@ -4,12 +4,13 @@
 
 <!-- member_update.jsp -->
 <c:import url="../top.jsp" />
-
 <style>
 	#section {
 		width:1100px;
 		height:400px;
 		margin:auto;
+		margin-top:80px;
+		text-align:center;
 	}
 </style>
 
@@ -20,8 +21,8 @@
 %>
 
 <div id="section">
-	<table width="500" align="center" border="1">
-		<caption><h2> 회원 가입 </h2></caption>
+	<table width="400" align="center" border="1">
+		<caption><h2> 회원정보 </h2></caption>
 		<tr>
 			<td width="140"> 아이디 </td>
 			<td>${member.userid}</td>

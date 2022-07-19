@@ -4,7 +4,7 @@
 
 <c:import url="../top.jsp" />
 	<div id="third">
-		<div id="box"><img src="../img/main.jpg" width="1100"></div>
+		<div id="box"><img src="../img/main2.jpg" width="1100"></div>
 	</div>
 	<div id="fourth">
 		<div id="gongji"> 공지사항</div>

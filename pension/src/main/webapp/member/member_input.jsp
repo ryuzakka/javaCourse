@@ -11,6 +11,15 @@
 		width:1100px;
 		height:400px;
 		margin:auto;
+		margin-top:70px;
+	}
+	#section #idError , #section #mailError , #section #phoneError {
+		font-size:13px;
+		color:red;
+	} 
+	#section .pwdError {
+		font-size:13px;
+		color:red;
 	}
 </style>
 
@@ -21,7 +30,7 @@
 -->
 
 <div id="section">
-	<table width="500" align="center" border="1">
+	<table width="450" align="center" border="1">
 	<form name="memeberInputForm" method="post" action="member_input_ok.jsp" onsubmit="return final_check(this)">
 		<caption><h2> 회원 가입 </h2></caption>
 		<tr>

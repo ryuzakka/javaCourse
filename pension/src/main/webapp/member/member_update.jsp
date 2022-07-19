@@ -22,9 +22,9 @@
 %>
 
 <div id="section">
-	<table width="500" align="center" border="1">
+	<table width="400" align="center" border="1">
 	<form name="memeberInputForm" method="post" action="member_update_ok.jsp">
-		<caption><h2> 회원 가입 </h2></caption>
+		<caption><h2> 회원정보 수정 </h2></caption>
 		<input type="hidden" name="id" value="${member.id}">
 		<tr>
 			<td width="140"> 아이디 </td>

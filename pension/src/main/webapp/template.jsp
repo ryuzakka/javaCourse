@@ -13,6 +13,7 @@
 	}
 </style>
 <c:import url="../top.jsp" />
+<div id="section">
 
-
+</div>
 <c:import url="../bottom.jsp" />

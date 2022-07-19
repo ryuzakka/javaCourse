@@ -28,6 +28,7 @@ public class MemberDao {
 		conn.close();
 	}
 	
+	// member_input.jsp => ID중복체크
 	public void useridCheck(HttpServletRequest request, JspWriter out) throws Exception {
 		String sql = "select count(*) cnt from member where userid=?";
 		pstmt = conn.prepareStatement(sql);
@@ -37,6 +38,7 @@ public class MemberDao {
 		out.print(rs.getString("cnt"));
 	}
 	
+	// member_input_ok.jsp => 회원가입
 	public void memberInput(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		String sql = "insert into member";
@@ -54,6 +56,7 @@ public class MemberDao {
 		response.sendRedirect("member_input_success.jsp");
 	}
 	
+	// login_ok.jsp => 로그인
 	public void loginOk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		String sql = "select * from member where userid=? and pwd=?";
 		pstmt = conn.prepareStatement(sql);
@@ -77,11 +80,13 @@ public class MemberDao {
 		}
 	}
 	
+	// logout.jsp => 로그아웃
 	public void logout(HttpSession session, HttpServletResponse response) throws Exception {
 		session.invalidate();
 		response.sendRedirect("../main/index.jsp");
 	}
 	
+	// member_info.jsp => 회원정보 조회
 	public void getUserInfo(HttpServletRequest request, HttpSession session) throws Exception {
 		String userid = session.getAttribute("userid").toString();
 		String sql = "select * from member where userid=?";
@@ -103,6 +108,7 @@ public class MemberDao {
 		close();
 	}
 	
+	// 비밀번호 검증 => 회원정보/비밀번호 수정때 활용
 	public boolean pwdCheck(String id, String pwd) throws Exception {
 		String sql = "select * from member where userid=? and pwd=?";
 		pstmt = conn.prepareStatement(sql);
@@ -120,7 +126,7 @@ public class MemberDao {
 		}
 	}
 	
-
+	// pwd_change_ok.jsp => 회원 비밀번호 수정
 	public void pwdChange(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		String id = session.getAttribute("userid").toString();
@@ -142,6 +148,7 @@ public class MemberDao {
 		}
 	}
 	
+	// member_update_ok.jsp => 회원정보수정
 	public void memberUpdate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		String userid = request.getParameter("userid");
@@ -167,7 +174,8 @@ public class MemberDao {
 		}
 	}
 	
-	public void useridSearch(HttpServletRequest request, JspWriter out) throws Exception {
+	// member_find.jsp => ID찾기를 ajax로 실행하고자 했지만 정상적으로 작동하지 않음!
+	public void useridSearch_ajax(HttpServletRequest request, JspWriter out) throws Exception {
 		String sql = "select userid from member where name=? and phone=?";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, request.getParameter("name"));
@@ -183,6 +191,57 @@ public class MemberDao {
 			out.print(0);
 		}
 	}
+	
+	// member_find.jsp => ID찾기
+	public void useridSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+		String sql = "select userid from member where name=? and phone=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, request.getParameter("name"));
+		pstmt.setString(2, request.getParameter("phone"));
+		ResultSet rs = pstmt.executeQuery();
+		//System.out.println(pstmt.toString());
+		if(rs.next()) {
+			String id = rs.getString("userid");
+			rs.close();
+			close();
+			response.sendRedirect("member_find.jsp?idchk=1&userid=" + id);
+		} else {
+			rs.close();
+			close();
+			response.sendRedirect("member_find.jsp?idchk=0");			
+		}
+	}
+	
+	// member_find.jsp => PW찾기
+	public void pwdSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+		String sql = "select pwd from member where userid=? and name=? and phone=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, request.getParameter("userid"));
+		pstmt.setString(2, request.getParameter("name"));
+		pstmt.setString(3, request.getParameter("phone"));
+		ResultSet rs = pstmt.executeQuery();
+		//System.out.println(pstmt.toString());
+		
+		if(rs.next()) {
+			String pwd = rs.getString("pwd");
+			rs.close();
+			close();
+			response.sendRedirect("member_find.jsp?pwdchk=1&pwd=" + pwd);
+		} else {
+			rs.close();
+			close();
+			response.sendRedirect("member_find.jsp?pwdchk=0");
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

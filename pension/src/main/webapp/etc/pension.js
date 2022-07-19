@@ -30,7 +30,7 @@ function userid_check(my) {
 				} else {
 					document.getElementById('idError').innerText = "사용 불가능한 아이디";
 					document.getElementById('idError').style.color = "red";
-					idcheck = 0;
+					idcheck = 2;
 				}
 			}
 		}
@@ -80,14 +80,22 @@ function phone_check(my) {
 // member_input.jsp => 가입하기 버튼(submit) 클릭 시 최종 확인
 function final_check(my) {
 	if(idcheck == 0) {
+		console.log(idcheck);
 		document.getElementById('idError').innerText = "아이디를 입력하세요.";
 		return false;
 	}
+	else if(idcheck == 2) {
+		console.log(idcheck);
+		document.getElementById('idError').innerText = "중복된 아이디 입니다.";
+		return false;
+	}
 	else if(pwdcheck == 0) {
+		console.log(pwdcheck);
 		document.getElementsByClassName('pwdError')[0].innerText = "비밀번호를 입력하세요.";
 		return false;
 	}
 	else if(phonecheck == 0) {
+		console.log(phonecheck);
 		document.getElementById('phoneError').innerText = "전화번호를 다시 확인해주세요.";
 		document.getElementById('phoneError').style.color = "red";		
 		return false;
@@ -163,6 +171,9 @@ function userid_search() {
 }
 
 
-// member_find.jsp => pwd 찾기
+// board/content.jsp => 게시글 삭제
+function board_delete_pwd() {
+	document.getElementsByClassName('pwd_input')[0].style.display = "inline-block";
+}
 
 
