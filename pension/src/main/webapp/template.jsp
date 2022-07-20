@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- .jsp -->
+<c:import url="../top.jsp" />
 <style>
 	#section {
 		width:1100px;
@@ -12,7 +13,6 @@
 		text-align:center;
 	}
 </style>
-<c:import url="../top.jsp" />
 <div id="section">
 
 </div>

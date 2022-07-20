@@ -8,6 +8,7 @@
 %>
 
 <!-- board/content.jsp -->
+<c:import url="../top.jsp" />
 <style>
 	#section {
 		width:1100px;
@@ -23,7 +24,6 @@
 		display:none;
 	}
 </style>
-<c:import url="../top.jsp" />
 <div id="section">
 	
 	<table width="400" align="center" border="1">
