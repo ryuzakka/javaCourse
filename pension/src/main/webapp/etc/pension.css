@@ -3,6 +3,13 @@
 body {
 	margin:0px;
 }
+
+input[type='text'] {
+	padding-left:5px;
+}
+textarea{
+	padding:5px;
+}
 #first {
 	width:1100px;
 	height:33px;

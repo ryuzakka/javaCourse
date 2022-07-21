@@ -52,14 +52,19 @@
 	<p>
 	<a href="list.jsp"><input type="button" value="목록"></a><p>
 	
+	
 	<c:if test="${content.userid == sessionScope.userid}">
-		<a href="update.jsp?id=${content.id}"><input type="button" value="수정"></a>
 		<a href="delete.jsp?id=${content.id}"><input type="button" value="삭제"></a>
+		<a href="update.jsp?id=${content.id}"><input type="button" value="수정"></a>
 	</c:if>
 	
 	<c:if test="${content.userid == 'guest'}">
 		<a href="update.jsp?id=${content.id}"><input type="button" value="수정"></a>
 		<input type="button" value="삭제" onclick="board_delete_pwd()">
+	</c:if>
+	
+	<c:if test="${userid == 'admin'}">	
+		<p><a href="delete.jsp?id=${content.id}"><input type="button" value="관리자삭제"></a></p>
 	</c:if>
 	
 	<p>
