@@ -2,10 +2,29 @@ package dto;
 
 public class TourDto {
 
-	int id, readnum;
-	String title, userid, content, fname, writeday;
+	int id, readnum, cnt;
+	String title, userid, content, fname, writeday, img;
+	String[] file;
 	
 	
+	public String[] getFile() {
+		return file;
+	}
+	public void setFile(String[] file) {
+		this.file = file;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getId() {
 		return id;
 	}

@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page import="dao.TourDao" %>
+<%@ page import="dao.TourDao_old" %>
 <%
-	TourDao dao = new TourDao();
+TourDao_old dao = new TourDao_old();
 	dao.list(request);
 %>
 <!-- tour/list.jsp -->
@@ -33,7 +32,7 @@
 	<c:if test="${userid != null}">	
 		<p><a href="write.jsp"><input type="button" value="후기 작성"></a></p>
 	</c:if>
-	<table width="600" align="center" border="1"> 
+	<table width="600" align="center" border="1">
 		<tr>
 			<td> 미리보기 </td>
 			<td> 제 목 </td>
@@ -44,14 +43,7 @@
 		
 		<c:forEach items="${list}" var="tour"> 
 		<tr>
-			<td>
-				<a href="readnum.jsp?id=${tour.id}">
-					<img src="../tour/img/${tour.img}" width="100">
-					<c:if test="${(tour.cnt-1) > 0}">
-						외 ${tour.cnt-1}개
-					</c:if>
-				</a>
-			</td>
+			<td> <a href="readnum.jsp?id=${tour.id}"><img src="../tour/img/${tour.fname}" width="100"></a> </td>
 			<td> <a href="readnum.jsp?id=${tour.id}">${tour.title}</a> </td>
 			<td> ${tour.userid} </td>
 			<td> ${tour.readnum} </td>

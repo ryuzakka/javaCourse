@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="dao.TourDao" %>
+<%@ page import="dao.TourDao_old" %>
 <%
-	TourDao dao = new TourDao();
+TourDao_old dao = new TourDao_old();
 	dao.content(request, 1);
 %>
 <!-- tour/content.jsp -->
@@ -11,7 +11,7 @@
 <style>
 	#section {
 		width:1100px;
-		height:auto;
+		height:400px;
 		margin:auto;
 		margin-top:80px;
 		text-align:center;
@@ -56,11 +56,7 @@
 		</tr>
 		<tr>
 			<td> 사 진 </td>
-			<td>
-				<c:forEach items="${content.file}" var="file">
-					<img src="../tour/img/${file}" width="200">
-				</c:forEach>
-			</td>
+			<td> <img src="../tour/img/${content.fname}" width="300"> </td>
 		</tr>
 		<tr>
 			<td> 조회수 </td>

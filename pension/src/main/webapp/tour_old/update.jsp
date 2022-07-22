@@ -3,9 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="dao.TourDao_old" %>
 <%
-p
-
-	TourDao_old dao = new TourDao_old();
+TourDao_old dao = new TourDao_old();
 	dao.content(request, 2);
 %>
 <!-- tour/update.jsp -->

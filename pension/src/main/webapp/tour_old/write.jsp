@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${userid == null}">
-	<c:redirect url="list.jsp" />
-</c:if>
+
 <!-- tour/write.jsp -->
 <c:import url="../top.jsp" />
 <style>
@@ -54,7 +52,7 @@
 			<td id="outer">
 				<input type="button" onclick="fileAdd()" value="add">
 				<input type="button" onclick="fileDel()" value="delete">
-				<p class="fname"><input type="file" name="fname1" ></p>
+				<p class="fname"><input type="file" name="fname" ></p>
 			</td>
 		</tr>
 	</table>
