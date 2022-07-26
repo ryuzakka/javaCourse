@@ -58,7 +58,7 @@
 				<span id="pwdErr">일치하는 정보가 없습니다.</span><p>
 				<a href="member_find.jsp"><input type="button" value="다시찾기"></a>
 				<% } else { %>
-				<span>PW : <%=request.getParameter("pwd")%></span>
+				<span>PW : ${pwd}<%session.removeAttribute("pwd");%></span>
 				<% } %>
 			</form>
 		</div>

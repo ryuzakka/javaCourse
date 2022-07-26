@@ -214,7 +214,7 @@ public class MemberDao {
 	}
 	
 	// member_find.jsp => PW찾기
-	public void pwdSearch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void pwdSearch(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		String sql = "select pwd from member where userid=? and name=? and phone=?";
 		pstmt = conn.prepareStatement(sql);
@@ -225,10 +225,11 @@ public class MemberDao {
 		//System.out.println(pstmt.toString());
 		
 		if(rs.next()) {
-			String pwd = rs.getString("pwd");
+			//String pwd = rs.getString("pwd");
+			session.setAttribute("pwd", rs.getString("pwd"));
 			rs.close();
 			close();
-			response.sendRedirect("member_find.jsp?pwdchk=1&pwd=" + pwd);
+			response.sendRedirect("member_find.jsp?pwdchk=1");
 		} else {
 			rs.close();
 			close();

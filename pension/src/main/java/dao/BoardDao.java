@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.BoardDto;
+import dto.GongjiDto;
 
 public class BoardDao {
 	
@@ -182,6 +183,31 @@ public class BoardDao {
 			response.sendRedirect("update.jsp?chk=1&id=" + id);
 		}
 	}
+	
+	public void getRecent(HttpServletRequest request) throws Exception {
+		String sql = "select * from board order by id desc limit 0,3";
+		pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+		
+		while(rs.next()) {
+			BoardDto dto = new BoardDto();
+			dto.setId(rs.getInt("id"));
+			if(rs.getString("title").length() > 16)				
+				dto.setTitle(rs.getString("title").substring(0, 14)+"···");
+			else
+				dto.setTitle(rs.getString("title"));
+			dto.setContent(rs.getString("content"));
+			dto.setUserid(rs.getString("userid"));
+			dto.setReadnum(rs.getInt("readnum"));
+			dto.setPwd(rs.getString("pwd"));
+			dto.setWriteday(rs.getString("writeday"));
+			list.add(dto);
+		}
+		request.setAttribute("blist", list);
+	}
+	
+	
 
 	
 }

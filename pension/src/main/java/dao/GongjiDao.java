@@ -132,6 +132,26 @@ public class GongjiDao {
 		response.sendRedirect("content.jsp?id=" + id);
 	}
 	
+	public void getRecent(HttpServletRequest request) throws Exception {
+		String sql = "select * from gongji order by id desc limit 0,3";
+		pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<GongjiDto> list = new ArrayList<GongjiDto>();
+		
+		while(rs.next()) {
+			GongjiDto dto = new GongjiDto();
+			dto.setId(rs.getInt("id"));
+			if(rs.getString("title").length() > 16)				
+				dto.setTitle(rs.getString("title").substring(0, 14)+"···");
+			else
+				dto.setTitle(rs.getString("title"));
+			dto.setContent(rs.getString("content"));
+			dto.setGubun(rs.getInt("gubun"));
+			dto.setWriteday(rs.getString("writeday"));
+			list.add(dto);
+		}
+		request.setAttribute("glist", list);
+	}
 	
 	
 }

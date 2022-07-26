@@ -7,7 +7,7 @@
 <style>
 	#section {
 		width:1100px;
-		height:400px;
+		height:auto;
 		margin:auto;
 		margin-top:80px;
 		text-align:center;

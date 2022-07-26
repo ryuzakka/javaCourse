@@ -49,7 +49,7 @@
 					<div>예약관련</div>
 					<ul class="sub">
 						<li> 예약안내 </li>
-						<li> 예약하기 </li>
+						<li><a href="../reserve/reserve.jsp">예약하기</a></li>
 					</ul>
 				</li>
 				<li id="menu" onmouseover="view(3)" onmouseout="hide(3)">

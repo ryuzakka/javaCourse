@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import dto.BoardDto;
 import dto.TourDto;
 
 public class TourDao {
@@ -123,7 +125,7 @@ public class TourDao {
 			dto.setUserid(rs.getString("userid"));
 			dto.setReadnum(rs.getInt("readnum"));
 			dto.setWriteday(rs.getString("writeday"));
-			
+			dto.setFname(rs.getString("fname"));
 			if(type == 1)
 				dto.setContent(rs.getString("content").replace("\r\n", "<br>"));
 			else
@@ -138,6 +140,121 @@ public class TourDao {
 		close();
 	}
 	
+	public void update_old(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String path = request.getRealPath("/tour/img");
+		MultipartRequest multi = multipt(request, path);
+		
+		String id = multi.getParameter("id");
+		// Enumeration(Enum) 은 여러개의 파일을 업로드할 때 사용. 파일 이름을 가져온다
+		Enumeration file = multi.getFileNames();	// 여러개의 파일을 업로드할 때 파일 이름을 가져온다.
+		String fname = request.getParameter("oldfname");
+		while(file.hasMoreElements()) {			
+			// getFilesystemName 으로 접근할 수 있다는 의미
+			fname += multi.getFilesystemName(file.nextElement().toString())+",";
+		}
+		//System.out.println("fname:"+fname);
+		
+		String sql = "insert into tour";
+		sql += "(title, content, fname, writeday) ";
+		sql += "values(?,?,?,?,now())";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, multi.getParameter("title"));
+		pstmt.setString(2, multi.getParameter("content"));
+		pstmt.setString(3, fname);
+		pstmt.executeUpdate();
+		
+		close();
+		response.sendRedirect("content.jsp?id="+id);
+	}
+	
+	public void update(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// mpr 객체 생성
+		String path = request.getRealPath("/tour/img");
+		MultipartRequest multi = multipt(request, path);
+		
+		// 삭제할 파일 목록을 통해 파일을 삭제
+		String[] deleteFiles = multi.getParameter("delfname").split(",");
+		
+		for(int i=0; i<deleteFiles.length; i++) {
+			File file = new File(path+"/"+deleteFiles[i]);
+			if(file.exists())
+				file.delete();
+		}
+		
+		/* 최종 파일 = 계속 보관할 파일 + 추가 업로드 하는 파일 */
+		
+		// 계속 보관할 파일
+		String saveFiles = multi.getParameter("stayfname");
+		
+		// 추가 업로드하는 파일
+		Enumeration upfile = multi.getFileNames();
+		String uploadFiles = "";
+		while(upfile.hasMoreElements()) {
+			uploadFiles += multi.getFilesystemName(upfile.nextElement().toString()) + ",";
+		}
+		
+		// null값 지우기
+		uploadFiles = uploadFiles.replace("null,", "");
+		
+		// 최종 파일로 합치기
+		String finalFiles = uploadFiles + saveFiles;
+		String id = multi.getParameter("id");
+		String sql = "update tour set ";
+		sql += "title=?, content=?, fname=? where id=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, multi.getParameter("title"));
+		pstmt.setString(2, multi.getParameter("content"));
+		pstmt.setString(3, finalFiles);
+		pstmt.setString(4, id);
+		pstmt.executeUpdate();
+		
+		close();
+		response.sendRedirect("content.jsp?id="+id);
+	}
+	
+	public void getRecent(HttpServletRequest request) throws Exception {
+		String sql = "select * from tour order by id desc limit 0,3";
+		pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<TourDto> list = new ArrayList<TourDto>();
+		
+		while(rs.next()) {
+			TourDto dto = new TourDto();
+			dto.setId(rs.getInt("id"));
+			if(rs.getString("title").length() > 16)				
+				dto.setTitle(rs.getString("title").substring(0, 14)+"···");
+			else
+				dto.setTitle(rs.getString("title"));
+			dto.setContent(rs.getString("content"));
+			dto.setUserid(rs.getString("userid"));
+			dto.setReadnum(rs.getInt("readnum"));
+			dto.setFname(rs.getString("fname"));
+			dto.setWriteday(rs.getString("writeday"));
+			list.add(dto);
+		}
+		request.setAttribute("tlist", list);
+	}
+	
+	public void delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// 삭제할 파일 목록을 통해 파일을 삭제
+		String[] deleteFiles = request.getParameter("fname").split(",");
+		String path = request.getRealPath("/tour/img");
+		for(int i=0; i<deleteFiles.length; i++) {
+			File file = new File(path+"/"+deleteFiles[i]);
+			if(file.exists())
+				file.delete();
+		}
+		
+		String id = request.getParameter("id");
+		String sql = "delete from tour where id=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id);
+		pstmt.executeUpdate();
+		
+		close();
+		response.sendRedirect("list.jsp");
+	}
 	
 	
 	

@@ -3,5 +3,5 @@
 <%@ page import="dao.MemberDao" %>
 <%
 	MemberDao dao = new MemberDao();
-	dao.pwdSearch(request, response);
+	dao.pwdSearch(request, response, session);
 %>
