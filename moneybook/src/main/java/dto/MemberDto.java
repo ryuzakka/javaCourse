@@ -2,8 +2,8 @@ package dto;
 
 public class MemberDto {
 	
-	int id, state;
-	String userid, name, pwd, blog, sns, writeday, phone;
+	private int id, state;
+	private String userid, name, pwd, blog, sns, writeday, phone;
 	
 	
 	public String getPhone() {

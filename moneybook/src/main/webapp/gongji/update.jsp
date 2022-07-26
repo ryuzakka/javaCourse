@@ -9,7 +9,7 @@
 <%@ page import="dao.GongjiDao" %>
 <%
 	GongjiDao dao = new GongjiDao();
-	dao.content(request,2);
+	dao.content(request,2); 
 %>
 
 <!-- gongji/update.jsp -->

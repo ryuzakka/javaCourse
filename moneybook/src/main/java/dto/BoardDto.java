@@ -1,9 +1,10 @@
 package dto;
 
-public class GongjiDto {
+public class BoardDto {
 
-	private int id, gubun;
-	private String title, content, writeday;
+	private int id, readnum;
+	private String title, content, userid, name, writeday;
+	
 	
 	public int getId() {
 		return id;
@@ -11,11 +12,11 @@ public class GongjiDto {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getGubun() {
-		return gubun;
+	public int getReadnum() {
+		return readnum;
 	}
-	public void setGubun(int gubun) {
-		this.gubun = gubun;
+	public void setReadnum(int readnum) {
+		this.readnum = readnum;
 	}
 	public String getTitle() {
 		return title;
@@ -28,6 +29,18 @@ public class GongjiDto {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getWriteday() {
 		return writeday;

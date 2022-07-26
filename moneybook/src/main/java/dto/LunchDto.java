@@ -2,8 +2,8 @@ package dto;
 
 public class LunchDto {
 
-	int id, readnum;
-	String title, menu, regname, zip, addr1, addr2, writeday, lat, lng;
+	private int id, readnum;
+	private String title, menu, regname, zip, addr1, addr2, writeday, lat, lng;
 	
 	
 	public String getLat() {

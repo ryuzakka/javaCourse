@@ -2,14 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
-	/* window.onload = function() {
+<!-- <script>
+	window.onload = function() {
 		var sectionHeight = document.getElementById('section').offsetHeight;
 		//console.log(sectionHeight);
 		//sectionHeight = sectionHeight + 80;
 		document.getElementById('sixth').style.top = sectionHeight+"px";
-	} */
-</script>
+	}
+</script> -->
 	<div id="sixth">
 		<table align="center">
 			<tr>

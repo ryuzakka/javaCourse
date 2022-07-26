@@ -2,8 +2,8 @@ package dto;
 
 public class CommentDto {
 
-	int id, bid, cnt;
-	String userid, name, content, writeday;
+	private int id, bid, cnt;
+	private String userid, name, content, writeday;
 	
 	public int getCnt() {
 		return cnt;

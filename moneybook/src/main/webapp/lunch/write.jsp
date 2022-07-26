@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:if test="${userid == null}">
+	<c:redirect url="list.jsp" />
+</c:if>
+
 <c:import url="../top.jsp" />
 <style>
 	#section {

@@ -27,7 +27,12 @@
 		text-align:center;
 	}
 	#section h1 {
-		margin:50px 0px 35px 0px;
+		margin:50px 0px 15px 0px;
+	}
+	#section .pageIntro {
+		font-size:14px;
+		color:#2F4F4F;
+		margin-bottom:40px;
 	}
 </style>
 <script>
@@ -79,16 +84,8 @@
 </script>
 <div id="section">
 	
-	<%-- <div id="noti">
-		<div id="notiTitle" align="center">알립니다.</div>
-		<table width="400" align="center" border="0">
-			<c:forEach items="${notice}" var="noti">
-				<tr><td><a href="../gongji/content.jsp?id=${noti.id}">${noti.title}</a></td></tr>
-			</c:forEach>
-		</table>
-	</div>
-	<hr> --%>
 	<h1> 내가 아는 맛집을 추천 해주세요! </h1>
+	<div class="pageIntro">회원제 게시판 입니다. 내가 아는 맛집을 추가하려면 로그인 해주세요.</div>
 	<c:if test="${userid != null}"><p><a href="write.jsp"><input type="button" value="내가 아는 맛집 추가하기"></a></p></c:if>
 	<table width="1000" align="center" border="1">
 		<tr>
@@ -127,4 +124,4 @@
 
 </div>
 
-<c:import url="../bottom.jsp" />
+<%-- <c:import url="../bottom.jsp" /> --%>
