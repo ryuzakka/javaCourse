@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="dao.ReserveDao" %>
+<c:if test="${userid == null}">
+	<c:redirect url="../member/member_only.jsp" />
+</c:if>
 <%
 	ReserveDao dao = new ReserveDao();
 	dao.reserve_next(request);
@@ -54,7 +57,7 @@
 		document.getElementById('inwon').innerText = new Intl.NumberFormat().format(howManyCost);
 		
 		// 3. 숯
-		var pack = document.reservationForm.pack.value;
+		var pack = document.reservationForm.charcoal.value;
 		var packCost = pack * 20000;
 		document.getElementById('charcoal').innerText = new Intl.NumberFormat().format(packCost);
 		
@@ -66,6 +69,9 @@
 		// 5. 총계
 		var tt = howLongCost + howManyCost + packCost + barbqCost;
 		document.getElementById('cost').innerText = new Intl.NumberFormat().format(tt);
+		
+		// form태그 내에 총 금액을 input태그에 전달
+		document.reservationForm.total.value = tt;
 	}
 	
 	window.onload = total_price();
@@ -74,15 +80,16 @@
 	
 	<h2> ${room.bang} : 예약 정보 </h2>
 	
-	<form name="reservationForm" method="post" action="">
+	<form name="reservationForm" method="post" action="reserve_ok.jsp">
+		<input type="hidden" name="bangid" value="${room.id}">
 	<table width="800" align="center" border="1">
 		<tr>
-			<td> <strong>방이름</strong> </td>
+			<td width="225"> <strong>방이름</strong> </td>
 			<td colspan="3"> ${room.bang} </td>
 		</tr>
 		<tr>
 			<td> <strong>입실일</strong> </td>
-			<td> ${checkIn} </td>
+			<td> <input type="hidden" name="checkin" value="${checkin}">${checkin} </td>
 			<td> <strong>숙박일수</strong> </td>
 			<td>
 				<select name="howLong" onchange="total_price()">
@@ -109,7 +116,7 @@
 		<tr>
 			<td> <strong>숯패키지</strong> </td>
 			<td>
-				<select name="pack" onchange="total_price()">
+				<select name="charcoal" onchange="total_price()">
 					<option value="0">선택안함</option>
 					<option value="1"> 1 명 </option>
 					<option value="2"> 2 명 </option>
@@ -151,12 +158,15 @@
 		</tr>
 		<tr>
 			<td> 최종금액 </td>
-			<td> <span id="cost"><fmt:formatNumber value="${room.price}" type="number" /></span> 원</td>
+			<td>
+				<span id="cost"><fmt:formatNumber value="${room.price}" type="number" /></span> 원
+				<input type="hidden" name="total" value="${room.price}">
+			</td>
 		</tr>
 	</table>
 	<p>
 	
-	<div id="confirmBtn" onclick="total_price()">계산하기</div>
+	<input type="submit" id="confirmBtn" value="예약하기">
 	</form>
 	
 </div>

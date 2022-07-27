@@ -48,8 +48,8 @@
 				<li id="menu" onmouseover="view(2)" onmouseout="hide(2)">
 					<div>예약관련</div>
 					<ul class="sub">
-						<li> 예약안내 </li>
 						<li><a href="../reserve/reserve.jsp">예약하기</a></li>
+						<li><a href="../reserve/reserve_view.jsp">예약확인</a></li>
 					</ul>
 				</li>
 				<li id="menu" onmouseover="view(3)" onmouseout="hide(3)">

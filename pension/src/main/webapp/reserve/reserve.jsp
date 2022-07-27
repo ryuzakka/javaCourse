@@ -61,6 +61,7 @@
 		text-align:left;
 		padding-top:4px;
 		padding-left:8px;
+		width:142px;
 	}
 	#section #roomList {
 		font-size:12px;
@@ -95,23 +96,43 @@
 		<c:forEach var="i" begin="1" end="${weeks}" step="1">
 		<tr>
 			<c:forEach var="j" begin="0" end="6">
-				<c:if test="${ (j<yoil && i==1) || day>total }">
-					<td>&nbsp;</td>
-				</c:if>
+			<c:if test="${ (j<yoil && i==1) || day>total }">
+				<td>&nbsp;</td>
+			</c:if>
+			
+			<c:if test="${ !((j<yoil && i==1) || day>total) }">
+				<td>
+					${day}
+					<!-- 방이름 출력 -->
+					<div id="roomList">
+					<%
+					String y = request.getAttribute("year").toString();
+					String m = request.getAttribute("month").toString();
+					String d = pageContext.getAttribute("day").toString();
+					String dday = y+"-"+m+"-"+d;
+					dao.getAvail(request, y, m, d);
+					%>
+						<c:if test="${avail == 1}">
+						<c:forEach items="${list}" var="room">
+							<c:set var="bangid" value="${room.id}" />
+							<!-- 방의 예약 여부체크(중복체크) => DAO메소드(년,월,일,방id) -->
+							<%
+							String bangid = pageContext.getAttribute("bangid").toString();
+							
+							dao.getEmpty(request, dday, bangid);
+							%>
+							
+							<p>
+							<c:if test="${cnt > 0}"><span style="color:tomato">${room.bang}</span></c:if>
+							<c:if test="${cnt == 0}"><a href="reserve_next.jsp?y=${year}&m=${month}&d=${day}&bid=${room.id}">${room.bang} (인원:${room.min}-${room.max})</a></c:if>
+							</p>
+						</c:forEach>
+						</c:if>
+					</div>
+				</td>
 				
-				<c:if test="${ !((j<yoil && i==1) || day>total) }">
-					<td>
-						${day}
-						<!-- 방이름 출력 -->
-						<div id="roomList">
-							<c:forEach items="${list}" var="room">
-								<p><a href="reserve_next.jsp?y=${year}&m=${month}&d=${day}&bid=${room.id}">${room.bang} (인원:${room.min}-${room.max})</a></p>
-							</c:forEach>
-						</div>
-					</td>
-					
-					<c:set var="day" value="${day+1}" />
-				</c:if>
+				<c:set var="day" value="${day+1}" />
+			</c:if>
 			</c:forEach>
 		</tr>
 		</c:forEach>
