@@ -8,8 +8,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dto.ReserveDto;
+import dto.RoomDto;
 
 public class ReserveDao {
 
@@ -64,16 +67,15 @@ public class ReserveDao {
 		request.setAttribute("year", yy);
 	}
 	
-	
 	public void getRoom(HttpServletRequest request) throws Exception {
 		
 		String sql = "select * from room where state=0 order by price asc";
 		pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		ArrayList<ReserveDto> list = new ArrayList<ReserveDto>();
+		ArrayList<RoomDto> list = new ArrayList<RoomDto>();
 		
 		while(rs.next()) {
-			ReserveDto dto = new ReserveDto();
+			RoomDto dto = new RoomDto();
 			dto.setId(rs.getInt("id"));
 			dto.setBang(rs.getString("bang"));
 			dto.setPrice(rs.getInt("price"));
@@ -84,9 +86,7 @@ public class ReserveDao {
 		}
 		request.setAttribute("list", list);
 		rs.close();
-		close();
 	}
-	
 	
 	public void reserve_next(HttpServletRequest request) throws Exception {
 		// JSP에 보내줄 내용 => 년, 월, 일, 방의 정보
@@ -106,7 +106,7 @@ public class ReserveDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()) {
-			ReserveDto dto = new ReserveDto();
+			RoomDto dto = new RoomDto();
 			dto.setId(rs.getInt("id"));
 			dto.setBang(rs.getString("bang"));
 			dto.setContent(rs.getString("content"));
@@ -115,15 +115,110 @@ public class ReserveDao {
 			dto.setPrice(rs.getInt("price"));
 			dto.setState(rs.getInt("state"));
 			request.setAttribute("room", dto);
-			request.setAttribute("checkIn", checkIn);
+			request.setAttribute("checkin", checkIn);
 		}
 		rs.close();
 		close();
 	}
 	
+	public void reserve_ok(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		// 입실일자 날짜객체로 저장
+		String checkin = request.getParameter("checkin");
+		String[] inDate = checkin.split("-");
+		int inYear = Integer.parseInt(inDate[0]);
+		int inMonth = Integer.parseInt(inDate[1]);
+		int inDay = Integer.parseInt(inDate[2]);
+		LocalDate in = LocalDate.of(inYear, inMonth, inDay);
+		
+		// 퇴실일자 날짜객체로 저장
+		int howLong = Integer.parseInt(request.getParameter("howLong"));
+		LocalDate out = in.plusDays(howLong);
+		
+		String sql = "insert into reserve";
+		sql += "(checkin, checkout, userid, bangid, inwon, charcoal, bbq, total, writeday) ";
+		sql += "values(?,?,?,?,?,?,?,?,now())";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, checkin);
+		pstmt.setString(2, out.toString());
+		pstmt.setString(3, session.getAttribute("userid").toString());
+		pstmt.setString(4, request.getParameter("bangid"));
+		pstmt.setString(5, request.getParameter("howMany"));
+		pstmt.setString(6, request.getParameter("charcoal"));
+		pstmt.setString(7, request.getParameter("bbq"));
+		pstmt.setString(8, request.getParameter("total"));
+		pstmt.executeUpdate();
+		
+		close();
+		response.sendRedirect("reserve_view.jsp");
+
+	}
 	
+	public void reserve_view(HttpServletRequest request, HttpSession session) throws Exception {
+		//String sql = "select * from reserve where userid=?";
+		//String sql = "select * from reserve,room where reserve.userid=? and room.id=reserve.bangid";
+		//String sql = "select reserve.*,bang from reserve,room where reserve.userid=? and room.id=reserve.bangid";
+		String sql = "select A.*,bang from reserve A,room B where A.userid=? and B.id=A.bangid";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, session.getAttribute("userid").toString());
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<ReserveDto> list = new ArrayList<ReserveDto>();
+		while(rs.next()) {
+			ReserveDto dto = new ReserveDto();
+			dto.setId(rs.getInt("id"));
+			dto.setBangid(rs.getInt("bangid"));
+			dto.setBbq(rs.getInt("bbq"));
+			dto.setCharcoal(rs.getInt("charcoal"));
+			dto.setCheckin(rs.getString("checkin"));
+			dto.setCheckout(rs.getString("checkout"));
+			dto.setInwon(rs.getInt("inwon"));
+			dto.setTotal(rs.getInt("total"));
+			dto.setUserid(rs.getString("userid"));
+			dto.setWriteday(rs.getString("writeday"));
+			dto.setBang(rs.getString("bang"));
+			list.add(dto);
+		}
+		request.setAttribute("reserve", list);
+		
+		rs.close();
+		close();
+	}
 	
+	public void getEmpty(HttpServletRequest request, String selectedDay, String bangid) throws Exception {
+		
+		String sql = "select count(*) cnt ";
+		sql += "from reserve ";
+		sql += "where checkin <= ? and ";
+		sql += "? < checkout and ";
+		sql += "bangid = ?";
+		
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, selectedDay);
+		pstmt.setString(2, selectedDay);
+		pstmt.setString(3, bangid);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		request.setAttribute("cnt", rs.getString("cnt"));
+		
+	}
 	
+	public void getAvail(HttpServletRequest request, String y, String m, String d) throws Exception {
+		int year = Integer.parseInt(y);
+		int month = Integer.parseInt(m);
+		int day = Integer.parseInt(d);
+		
+		LocalDate today = LocalDate.now();
+		LocalDate dday = LocalDate.of(year, month, day);
+		
+		if(today.isBefore(dday)) {
+			request.setAttribute("avail", 1);
+		} else if(today.isAfter(dday)) {			
+			request.setAttribute("avail", 0);
+		} else {
+			request.setAttribute("avail", 1);			
+		}
+	}
 	
 	
 	

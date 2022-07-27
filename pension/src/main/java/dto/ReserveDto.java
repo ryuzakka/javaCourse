@@ -2,8 +2,9 @@ package dto;
 
 public class ReserveDto {
 	
-	private int id, min, max, price, state;
-	private String bang, content;
+	private int id, bangid, inwon, charcoal, bbq, total;
+	private String checkin, checkout, userid, writeday, bang;
+	
 	
 	public int getId() {
 		return id;
@@ -11,29 +12,59 @@ public class ReserveDto {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getMin() {
-		return min;
+	public int getBangid() {
+		return bangid;
 	}
-	public void setMin(int min) {
-		this.min = min;
+	public void setBangid(int bangid) {
+		this.bangid = bangid;
 	}
-	public int getMax() {
-		return max;
+	public int getInwon() {
+		return inwon;
 	}
-	public void setMax(int max) {
-		this.max = max;
+	public void setInwon(int inwon) {
+		this.inwon = inwon;
 	}
-	public int getPrice() {
-		return price;
+	public int getCharcoal() {
+		return charcoal;
 	}
-	public void setPrice(int price) {
-		this.price = price;
+	public void setCharcoal(int charcoal) {
+		this.charcoal = charcoal;
 	}
-	public int getState() {
-		return state;
+	public int getBbq() {
+		return bbq;
 	}
-	public void setState(int state) {
-		this.state = state;
+	public void setBbq(int bbq) {
+		this.bbq = bbq;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public String getCheckin() {
+		return checkin;
+	}
+	public void setCheckin(String checkin) {
+		this.checkin = checkin;
+	}
+	public String getCheckout() {
+		return checkout;
+	}
+	public void setCheckout(String checkout) {
+		this.checkout = checkout;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public String getWriteday() {
+		return writeday;
+	}
+	public void setWriteday(String writeday) {
+		this.writeday = writeday;
 	}
 	public String getBang() {
 		return bang;
@@ -41,10 +72,5 @@ public class ReserveDto {
 	public void setBang(String bang) {
 		this.bang = bang;
 	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
+
 }
