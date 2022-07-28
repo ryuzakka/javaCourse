@@ -21,11 +21,21 @@
 		text-align:center;
 	}
 	#section table {
-		margin-top:20px;
-		margin-bottom:50px;
+		margin-top:40px;
+		margin-bottom:10px;
 		border-spacing:0px;
 	}
 </style>
+<script>
+	function cancelCheck(id) {
+		var chk = confirm("정말 취소하시겠습니까?");
+		if(chk) {
+			location = "state_change.jsp?state=1&id="+id;
+		} else {
+			return false;	
+		}
+	}
+</script>
 <div id="section">
 	
 
@@ -53,7 +63,23 @@
 				<td> <strong>BBQ(식재료)</strong> </td>
 				<td> ${reservation.bbq} </td>
 			</tr>
+			<tr>
+				<td colspan="4">
+					<c:if test="${reservation.state == 0}"><span style="color:forestgreen;">예약 완료</span></c:if>
+					<c:if test="${reservation.state == 1}"><span style="color:blue;">취소신청 중</span></c:if>
+					<c:if test="${reservation.state == 2}"><span style="color:red;">취소 완료</span></c:if>
+					<c:if test="${reservation.state == 3}"><span style="color:darkgrey;">사용 완료</span></c:if>
+				</td>
+			</tr>
 		</table>
+		<p>
+			<c:if test="${reservation.state == 0}">
+				<input type="button" value="취소할래요" onclick="cancelCheck(${reservation.id})">
+			</c:if>
+			<c:if test="${reservation.state == 1}">
+				<input type="button" value="취소 안할래요" onclick="location='state_change.jsp?state=0&id=${reservation.id}'">
+			</c:if>
+		</p>
 	</c:forEach>
 </c:if>
 	
