@@ -9,6 +9,8 @@
 <%
 	ReserveDao dao = new ReserveDao();
 	dao.reserve_next(request);
+	
+	dao.getSuk(request);
 %>
 <!-- reserve_next.jsp -->
 <c:import url="../top.jsp" />
@@ -29,12 +31,12 @@
 	#section #confirmBtn {
 		display:inline-block;
 		width:400px;
-		height:48px;
-		padding-top:15px;
+		height:70px;
+		/* padding-top:15px; */
 		background:#6B8E23;
 		color:white;
 		font-size:20px;
-		margin:30px 0px;
+		margin:30px 0px 10px 0px;
 	}
 	#section #confirmBtn:hover {
 		background:#556B2F;
@@ -78,10 +80,10 @@
 </script>
 <div id="section">
 	
-	<h2> ${room.bang} : 예약 정보 </h2>
-	
-	<form name="reservationForm" method="post" action="reserve_ok.jsp">
-		<input type="hidden" name="bangid" value="${room.id}">
+<h1> 예약 신청서 (${userid}님) </h1>
+
+<form name="reservationForm" method="post" action="reserve_ok.jsp">
+	<input type="hidden" name="bangid" value="${room.id}">
 	<table width="800" align="center" border="1">
 		<tr>
 			<td width="225"> <strong>방이름</strong> </td>
@@ -93,11 +95,9 @@
 			<td> <strong>숙박일수</strong> </td>
 			<td>
 				<select name="howLong" onchange="total_price()">
-					<option value="1">1박</option>
-					<option value="2">2박</option>
-					<option value="3">3박</option>
-					<option value="4">4박</option>
-					<option value="5">5박</option>
+				<c:forEach var="i" begin="1" end="${available}">
+					<option value="${i}">${i}박</option>
+				</c:forEach>
 				</select>
 			</td>
 		</tr>
@@ -139,6 +139,7 @@
 		</tr>
 	</table>
 	<p>
+	<h2>가격표</h2>
 	<table width="800" align="center" border="1">
 		<tr>
 			<td> 숙박가격 </td>
@@ -167,7 +168,8 @@
 	<p>
 	
 	<input type="submit" id="confirmBtn" value="예약하기">
-	</form>
+	<p><a href="reserve.jsp">취소하기</a></p>
+</form>
 	
 </div>
 <c:import url="../bottom.jsp" />

@@ -31,29 +31,29 @@
 
 <c:if test="${userid != null}">
 	
-	<h2>${username}님의 예약정보</h2>
+	<h2>${userid}님의 예약정보</h2>
 	
 	<c:forEach items="${reserve}" var="reservation">
-	<table width="600" align="center" border="1">
-		<tr>
-			<td> <strong>입실일</strong> </td>
-			<td> ${reservation.checkin} </td>
-			<td> <strong>숙박일수</strong> </td>
-			<td> ${reservation.checkout} </td>
-		</tr>
-		<tr>
-			<td> <strong>방이름</strong> </td>
-			<td> ${reservation.bang} </td>
-			<td> <strong>입실인원</strong> </td>
-			<td> ${reservation.inwon}</td>
-		</tr>
-		<tr>
-			<td> <strong>숯패키지</strong> </td>
-			<td> ${reservation.charcoal} </td>
-			<td> <strong>BBQ(식재료)</strong> </td>
-			<td> ${reservation.bbq} </td>
-		</tr>
-	</table>
+		<table width="600" align="center" border="1">
+			<tr>
+				<td> <strong>입실일</strong> </td>
+				<td> ${reservation.checkin} </td>
+				<td> <strong>숙박일수</strong> </td>
+				<td> ${reservation.checkout} </td>
+			</tr>
+			<tr>
+				<td> <strong>방이름</strong> </td>
+				<td> ${reservation.bang} </td>
+				<td> <strong>입실인원</strong> </td>
+				<td> ${reservation.inwon}</td>
+			</tr>
+			<tr>
+				<td> <strong>숯패키지</strong> </td>
+				<td> ${reservation.charcoal} </td>
+				<td> <strong>BBQ(식재료)</strong> </td>
+				<td> ${reservation.bbq} </td>
+			</tr>
+		</table>
 	</c:forEach>
 </c:if>
 	
