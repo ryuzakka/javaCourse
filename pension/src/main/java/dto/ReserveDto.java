@@ -2,7 +2,7 @@ package dto;
 
 public class ReserveDto {
 	
-	private int id, bangid, inwon, charcoal, bbq, total;
+	private int id, bangid, inwon, charcoal, bbq, total, state;
 	private String checkin, checkout, userid, writeday, bang;
 	
 	
@@ -71,6 +71,12 @@ public class ReserveDto {
 	}
 	public void setBang(String bang) {
 		this.bang = bang;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
 	}
 
 }

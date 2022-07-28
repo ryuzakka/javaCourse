@@ -177,6 +177,7 @@ public class ReserveDao {
 			dto.setUserid(rs.getString("userid"));
 			dto.setWriteday(rs.getString("writeday"));
 			dto.setBang(rs.getString("bang"));
+			dto.setState(rs.getInt("state"));
 			list.add(dto);
 		}
 		request.setAttribute("reserve", list);
@@ -255,7 +256,19 @@ public class ReserveDao {
 		request.setAttribute("available", available);
 	}
 	
-	
+	public void state_change(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String id = request.getParameter("id");
+		String state = request.getParameter("state");
+		String sql = "update reserve set state=? where id=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, state);
+		pstmt.setString(2, id);
+		pstmt.executeUpdate();
+		
+		close();
+		response.sendRedirect("reserve_view.jsp");
+	}
 	
 	
 	
