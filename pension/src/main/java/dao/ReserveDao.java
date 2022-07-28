@@ -118,7 +118,7 @@ public class ReserveDao {
 			request.setAttribute("checkin", checkIn);
 		}
 		rs.close();
-		close();
+//		close();
 	}
 	
 	public void reserve_ok(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
@@ -219,6 +219,43 @@ public class ReserveDao {
 			request.setAttribute("avail", 1);			
 		}
 	}
+	
+	public void getSuk(HttpServletRequest request) throws Exception {
+		
+		// 체크인 날짜 (String)
+		String ymd = request.getAttribute("checkin").toString();
+		// 예약하려는 객실 정보
+		RoomDto dto = (RoomDto)request.getAttribute("room");
+		
+		// 체크인 날짜 (String -> 날짜객체)
+		String[] checkin = ymd.split("-");
+		int year = Integer.parseInt(checkin[0]);
+		int month = Integer.parseInt(checkin[1]);
+		int day = Integer.parseInt(checkin[2]);
+		LocalDate dday = LocalDate.of(year, month, day);		
+		
+		// 숙박 가능 여부 체크
+		String sql = "";
+		int available = 0;	// 가능 일수
+		for(int i=1; i<=5; i++) {
+			available++;
+			LocalDate xday = dday.plusDays(i);
+			
+			sql = "select * from reserve where checkin<=? and ?<checkout and bangid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, xday.toString());
+			pstmt.setString(2, xday.toString());
+			pstmt.setInt(3, dto.getId());
+			ResultSet rs = pstmt.executeQuery();
+			//System.out.println(pstmt.toString());
+			if(rs.next())
+				break;
+		}
+		
+		request.setAttribute("available", available);
+	}
+	
+	
 	
 	
 	
