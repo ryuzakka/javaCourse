@@ -10,6 +10,14 @@
 		margin:auto;
 		background:#E0FFFF;
 	}
+	#third #box {
+		width:1400px;
+		height:400px;
+	}
+	#third #box img {
+		width:100%;
+		height:100%;
+	}
 	#fourth {
 		width:1000px;
 		height:150px;
@@ -26,7 +34,7 @@
 </style>
 
 	<div id="third">
-		<div id="box"><img src=""></div>
+		<div id="box"><img src="img/1.png"></div>
 	</div>
 	<div id="fourth">
 		<div id="gongji">
