@@ -10,13 +10,13 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script>
 	$(function(){
-		$("#main").accordion();
+		$(".main").accordion();
 	});
 </script>
 </head>
 <body>
 	
-	<div id="main">
+	<div class="main">
 		<h2>짜장면</h2>
 		<div>중국요리의 하나. 고기와 채소를 넣어 볶은 중국 된장에 국수를 비벼 먹는다.</div>
 		<h2>짬뽕</h2>
@@ -26,6 +26,59 @@
 		<h2>비빔밥</h2>
 		<div>고기나 나물 따위와 여러 가지 양념을 넣어 비벼 먹는 밥.</div>
 	</div>
+	
+	<hr>
+	
+	<div>
+		<ul>
+			<li class="main">
+				<dl>
+					<dd>1</dd>
+					<dd>2</dd>
+					<dd>3</dd>
+					<dd>4</dd>
+				</dl>
+			</li>
+			<li class="main">
+				<dl>
+					<dd>1</dd>
+					<dd>2</dd>
+					<dd>3</dd>
+					<dd>4</dd>
+				</dl>
+			</li>
+			<li class="main">
+				<dl>
+					<dd>1</dd>
+					<dd>2</dd>
+					<dd>3</dd>
+					<dd>4</dd>
+				</dl>
+			</li>
+		</ul>
+	</div>
+	
+	<hr>
+	
+	<table>
+		<tr>
+			<th>head</th>
+			<th>head</th>
+			<th>head</th>
+		</tr>
+		<tr class="main">
+			<td>data</td>
+			<td>data</td>
+			<td>data</td>
+		</tr>
+		<tr class="main">
+			<td>data</td>
+			<td>data</td>
+			<td>data</td>
+		</tr>
+	</table>
+	
+	
 	
 </body>
 </html>
